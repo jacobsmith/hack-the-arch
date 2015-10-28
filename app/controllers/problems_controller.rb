@@ -7,8 +7,14 @@ class ProblemsController < ApplicationController
 	def index
 		if current_user && current_user.admin?
 			@problems = Problem.all.order!(category: 'ASC', points: 'ASC')
+			@all_user_answers = UserProblem.where(problem_id: @problems)
+			@users = User.where(id: @all_user_answers.pluck(:user_id))	
+
+
 		else
 			@problems = Problem.where(visible: true).order!(category: 'ASC', points: 'ASC')
+		
+			@user_answers = UserProblem.where(problem_id: @problems)
 		end
 
 		if params[:problem_id]

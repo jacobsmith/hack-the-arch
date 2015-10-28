@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926231931) do
+ActiveRecord::Schema.define(version: 20151028193810) do
 
   create_table "brackets", force: :cascade do |t|
     t.string   "name"
@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(version: 20150926231931) do
     t.string   "passphrase"
     t.string   "members"
     t.integer  "bracket_id"
+  end
+
+  create_table "user_problems", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "problem_id"
+    t.text     "explanation"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -7,6 +7,7 @@ class SubmissionsController < ApplicationController
 	end
 
 	def create
+		explanation = params[:submission][:explanation]
 		correct = false
 		points = 0
 		solution = params[:submission][:value]
@@ -48,6 +49,11 @@ class SubmissionsController < ApplicationController
 					 						submission: solution,
 					 						correct: correct,
 					 						points:	points)
+
+	UserProblem.create(user_id: current_user.id,
+		problem_id: @problem.id,
+		explanation: explanation)
+
 	end
 
 	private
