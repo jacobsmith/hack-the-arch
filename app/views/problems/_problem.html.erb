@@ -21,7 +21,7 @@
 			<%= content_tag :h4, "Solves: #{Submission.get_solves_for_problem(@problem.id)}", class: 'text-center' %>
 			<%= content_tag :p, @problem.description %>
 			<p><%= image_tag @problem.picture.url if @problem.picture? %></p>
-			<% if @problem.solved_by?(current_user.team_id) %>
+			<% if @problem.solved_by?(current_user.team_id) || current_user.admin? %>
 				<p>Your team has solved this challenge!</p>
 
 				<%= render 'user_answer' %>

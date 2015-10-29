@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 	attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
   before_create :create_activation_digest
+	has_many :user_problems, dependent: :destroy
+
 	validates :fname,  presence: true, length: { maximum: 50 }
 	validates :lname,  presence: true, length: { maximum: 50 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
