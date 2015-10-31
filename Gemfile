@@ -11,19 +11,21 @@ gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.10'
 gem 'carrierwave', '0.10.0'
 gem 'mini_magick', '3.8.0'
 gem 'fog', '1.26.0'
 gem 'fog-google'
-gem 'will_paginate', '3.0.7' 
+gem 'will_paginate', '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
+gem 'prawn', '~> 2.0.2'
 
 group :development, :test do
 	gem 'sqlite3'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+	gem 'pry'
 end
 
 group :test do
@@ -32,7 +34,7 @@ group :test do
   gem 'guard-minitest',	'2.3.1'
 end
 
-# Configured for Heroku 
+# Configured for Heroku
 group :production do
   gem 'pg',	'0.17.1'
   gem 'rails_12factor', '0.0.2'
