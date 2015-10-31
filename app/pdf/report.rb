@@ -14,7 +14,9 @@ class Report
 
     def generate!
       @pdf.extend(CoverPage).generate(@opts) # student_name
-      @pdf.extend(IntroObjectiveRequirements).generate(@helper, @opts)
+      @pdf.extend(IntroObjectiveRequirements).generate(@helper, @opts) # introduction, objective, requirements
+      @pdf.extend(HighLevelSummary).generate(@helper, @opts) # high_level_summary, recommendations 
+      @pdf.extend(Methodologies).generate(@helper, @opts)
       @pdf.render_file "/Users/jacobsmith/test.pdf"
       @pdf.render
     end
