@@ -10,6 +10,7 @@ module Penetrations
     move_down 20
 
     @penetrations.each do |penetration|
+      start_new_page
       @helper.subsection(self, penetration[:vulnerability])
       text "<b>Vulnerability Exploited:</b> #{penetration[:vulnerability]}", inline_format: true
       move_down 20
@@ -22,7 +23,7 @@ module Penetrations
       move_down 20
 
       text "<b>Vulnerability Explanation:</b>", inline_format: true
-      text "#{penetration[:vulnerability_fix]}", indent_paragraphs: 30  
+      text "#{penetration[:vulnerability_fix]}", indent_paragraphs: 30
       move_down 20
 
       text "<b>Severity:</b> #{get_severity_text(penetration[:severity])}", inline_format: true
@@ -40,13 +41,23 @@ module Penetrations
 
   def get_severity_text(current_severity)
     severities = {
-      critical: "<color rgb='#{get_rgb_color(:red)}'>CRITICAL</color>"
+      critical: "<color rgb='#{get_rgb_color(:pink)}'>CRITICAL</color>",
+      high: "<color rgb='#{get_rgb_color(:red)}'>HIGH</color>",
+      medium: "<color rgb='#{get_rgb_color(:orange)}'>MEDIUM</color>",
+      low: "<color rgb='#{get_rgb_color(:yellow)}'>LOW</color>",
+      note: "<color rgb='#{get_rgb_color(:green)}'>NOTE</color>"
     }
     severities[current_severity]
   end
 
   def get_rgb_color(color)
-    colors = { red: 'FF0000' }
+    colors = {
+      red: 'FF0000',
+      pink: 'FFC0CB',
+      orange: 'FF9F30',
+      yellow: 'FFF700',
+      green: '00FF00'
+    }
     colors[color]
   end
 
@@ -59,7 +70,40 @@ module Penetrations
         vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
         severity: :critical,
         proof_of_concept_code: "def testing\n  this should be indendted\nend"
+      },
+      {
+        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
+        system_vulnerable: "172.16.203.134",
+        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
+        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
+        severity: :high,
+        proof_of_concept_code: "def testing\n  this should be indendted\nend"
+      },
+      {
+        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
+        system_vulnerable: "172.16.203.134",
+        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
+        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
+        severity: :medium,
+        proof_of_concept_code: "def testing\n  this should be indendted\nend"
+      },
+      {
+        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
+        system_vulnerable: "172.16.203.134",
+        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
+        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
+        severity: :low,
+        proof_of_concept_code: "def testing\n  this should be indendted\nend"
+      },
+      {
+        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
+        system_vulnerable: "172.16.203.134",
+        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
+        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
+        severity: :note,
+        proof_of_concept_code: "def testing\n  this should be indendted\nend"
       }
+
     ]
   end
 end
