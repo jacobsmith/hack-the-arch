@@ -11,13 +11,13 @@ module IntroObjectiveRequirements
     @helper.section(self, "Lab and Exam Penetration Test Report")
 
     @helper.subsection(self, "Introduction")
-    text @introduction_text
+    @helper.text(self, @introduction_text)
 
     @helper.subsection(self, "Objective")
-    text @objective_text
+    @helper.text(self, @objective_text)
 
     @helper.subsection(self, "Requirements")
-    text @requirements_text
+    @helper.text(self, @requirements_text)
       bullet_item('Overall High-Level Summary and Recommendations (non-technical)')
       bullet_item('Methodology walkthrough and detailed outline of steps taken')
       bullet_item('Each finding with included screenshots, walkthrough, sample code, and proof.txt if applicable.')
