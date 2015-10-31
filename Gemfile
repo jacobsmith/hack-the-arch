@@ -19,6 +19,7 @@ gem 'fog-google'
 gem 'will_paginate', '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
 gem 'prawn', '~> 2.0.2'
+gem 'prawn-table', '~> 0.2.2'
 
 group :development, :test do
 	gem 'sqlite3'
