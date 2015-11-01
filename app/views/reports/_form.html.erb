@@ -1,0 +1,63 @@
+<%= form_for(@report) do |f| %>
+  <% if @report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h2>
+
+      <ul>
+      <% @report.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.fields_for :options, OpenStruct.new(f.object.options || {}) do |f2| %>
+    <div class="field">
+      <%= f2.label :student_name %><br>
+      <%= f2.text_field :student_name  %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :introduction %><br>
+      <%= f2.text_area :introduction %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :requirements %><br>
+      <%= f2.text_area :requirements %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :high_level_summary %><br>
+      <%= f2.text_area :high_level_summary %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :recommendations %><br>
+      <%= f2.text_area :recommendations %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :methodologies_overview %><br>
+      <%= f2.text_area :methodologies_overview %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :information_gathering %><br>
+      <%= f2.text_area :information_gathering %>
+    </div>
+
+    <div class="field">
+      <%= f2.label :service_enumeration %><br>
+      <%= f2.text_area :service_enumeration %>
+    </div>
+
+    <%= f2.fields_for :enumerations, OpenStruct.new(f2.object.enumerations || {}) do |f3| %>
+      <%= render 'service_enumerations', f: f3 %>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% end %>

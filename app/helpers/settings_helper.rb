@@ -3,7 +3,7 @@ module SettingsHelper
 		start_time = Time.parse(Setting.find_by(name: 'start_time').value)
 		start_time < Time.zone.now
 	end
-	
+
 	def competition_ended?
 		end_time = Time.parse(Setting.find_by(name: 'end_time').value)
 		Time.zone.now > end_time
@@ -14,7 +14,7 @@ module SettingsHelper
 	end
 
 	def competition_name
-		Setting.find_by(name: 'competition_name').value
+		Setting.find_by(name: 'competition_name').try(:value) || ''
 	end
 
 	def subtract_hint_points_before_solve?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028193810) do
+ActiveRecord::Schema.define(version: 20151101020737) do
 
   create_table "brackets", force: :cascade do |t|
     t.string   "name"
@@ -60,6 +60,12 @@ ActiveRecord::Schema.define(version: 20151028193810) do
     t.string   "hints"
     t.string   "picture"
     t.boolean  "visible"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.text     "options",    limit: 3116480
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "settings", force: :cascade do |t|

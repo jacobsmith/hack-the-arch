@@ -1,5 +1,5 @@
 # modeled after http://www.yoniweisbrod.com/generating-complex-pdf-documents-in-rails-with-prawn/
-class Report
+class ReportPdf
     include Prawn::View
 
     attr_accessor :pdf, :opts
