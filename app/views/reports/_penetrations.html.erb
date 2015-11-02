@@ -10,10 +10,10 @@
     <%= penetration_instance.text_field :system_vulnerable, value: penetration[:system_vulnerable] %>
 
     <%= penetration_instance.label :vulnerability_explanation %>
-    <%= penetration_instance.text_area :vulnerability_explanation, value: penetration[:vulnerability_explanation] %>
+    <%= penetration_instance.text_area :vulnerability_explanation, value: penetration[:vulnerability_explanation], rows: 4 %>
 
     <%= penetration_instance.label :vulnerability_fix %>
-    <%= penetration_instance.text_area :vulnerability_fix, value: penetration[:vulnerability_fix] %>
+    <%= penetration_instance.text_area :vulnerability_fix, value: penetration[:vulnerability_fix], rows: 4 %>
 
     <%= penetration_instance.label :severity %>
     <%= select_tag 'report[options][penetrations][' + key.to_s + '][severity]', options_for_select(Report.severity_levels) %>
@@ -26,7 +26,7 @@
 </div>
 
 <br>
-<a href="#noredirect" onclick="addNewPenetrationTarget()">Add New Penetration Target</a>
+<a href="#noredirect" onclick="addNewPenetrationTarget()">Add New Successful Penetration Log</a>
 <hr>
 
 <script type="text/javascript">
@@ -42,6 +42,7 @@
   }
 
   function addNewPenetrationTarget() {
+    setVisiblity('penetrations', 'true');
     var penetrations = $('.penetrations');
     var newGuid = guid();
     $('<hr>').appendTo(penetrations);
@@ -56,11 +57,11 @@
 
     // Vulnerability Explanation
     $('<label for="report[options][penetrations][' + newGuid + '][vulnerability_explanation]">Vulnerability Explanation</label>').appendTo(penetrations);
-    $('<textarea value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_explanation]" id="report_options_penetrations_' + newGuid + '_vulnerability_explanation"></textarea>').appendTo(penetrations);
+    $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_explanation]" id="report_options_penetrations_' + newGuid + '_vulnerability_explanation"></textarea>').appendTo(penetrations);
 
     // Vulnerability Fix
     $('<label for="report[options][penetrations][' + newGuid + '][vulnerability_fix]">Vulnerability Fix</label>').appendTo(penetrations);
-    $('<textarea value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_fix]" id="report_options_penetrations_' + newGuid + '_vulnerability_fix"></textarea>').appendTo(penetrations);
+    $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_fix]" id="report_options_penetrations_' + newGuid + '_vulnerability_fix"></textarea>').appendTo(penetrations);
 
     // Severity
     $('<label for="report[options][penetrations][' + newGuid + '][severity]">Severity</label>').appendTo(penetrations);
@@ -68,6 +69,6 @@
 
     // Proof of Concept Code
     $('<label for="report[options][penetrations][' + newGuid + '][proof_of_concept_code]">Proof of Concept Code</label>').appendTo(penetrations);
-    $('<textarea value="" type="text" name="report[options][penetrations][' + newGuid + '][proof_of_concept_code]" id="report_options_penetrations_' + newGuid + '_proof_of_concept_code"></textarea>').appendTo(penetrations);
+    $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][proof_of_concept_code]" id="report_options_penetrations_' + newGuid + '_proof_of_concept_code"></textarea>').appendTo(penetrations);
   }
 </script>

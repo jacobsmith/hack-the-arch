@@ -1,3 +1,5 @@
+<a href="#hideall" onclick="hideAll()">Hide All</a>
+
 <%= form_for(@report) do |f| %>
   <% if @report.errors.any? %>
     <div id="error_explanation">
@@ -27,49 +29,49 @@
     <%= render 'show_hide', target: :introduction %>
     <div class="field">
       <%= f2.label :introduction %><br>
-      <%= f2.text_area :introduction %>
+      <%= f2.text_area :introduction, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :objective %>
     <div class="field">
       <%= f2.label :objective %><br>
-      <%= f2.text_area :objective %>
+      <%= f2.text_area :objective, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :requirements %>
     <div class="field">
       <%= f2.label :requirements %><br>
-      <%= f2.text_area :requirements %>
+      <%= f2.text_area :requirements, rows: 4  %>
     </div>
 
     <%= render 'show_hide', target: :high_level_summary %>
     <div class="field">
       <%= f2.label :high_level_summary %><br>
-      <%= f2.text_area :high_level_summary %>
+      <%= f2.text_area :high_level_summary, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :recommendations %>
     <div class="field">
       <%= f2.label :recommendations %><br>
-      <%= f2.text_area :recommendations %>
+      <%= f2.text_area :recommendations, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :methodologies_overview %>
     <div class="field">
       <%= f2.label :methodologies_overview %><br>
-      <%= f2.text_area :methodologies_overview %>
+      <%= f2.text_area :methodologies_overview, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :information_gathering %>
     <div class="field">
       <%= f2.label :information_gathering %><br>
-      <%= f2.text_area :information_gathering %>
+      <%= f2.text_area :information_gathering, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :service_enumeration %>
     <div class="field">
       <%= f2.label :service_enumeration, "Service Enumeration Text" %><br>
-      <%= f2.text_area :service_enumeration %>
+      <%= f2.text_area :service_enumeration, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :enumerations %>
@@ -91,19 +93,19 @@
     <%= render 'show_hide', target: :maintaining_access %>
     <div class="field">
       <%= f2.label :maintaining_access %>
-      <%= f2.text_area :maintaining_access %>
+      <%= f2.text_area :maintaining_access, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :house_cleaning %>
     <div class="field">
       <%= f2.label :house_cleaning %>
-      <%= f2.text_area :house_cleaning %>
+      <%= f2.text_area :house_cleaning, rows: 4 %>
     </div>
 
     <%= render 'show_hide', target: :additional_items %>
     <div class="field">
       <%= f2.label :additional_items %>
-      <%= f2.text_area :additional_items %>
+      <%= f2.text_area :additional_items, rows: 4 %>
     </div>
 
     <div class="actions">
@@ -113,6 +115,17 @@
 <% end %>
 
 <script type="text/javascript">
+  function hideAll() {
+      var targets = [];
+      $('.show-hide').each(function(index, toggle) {
+          targets.push(toggle.attributes['data-target'].value);
+      });
+
+      for (var i = 0; i < targets.length; i++) {
+        setVisiblity(targets[i], "false");
+      }
+  }
+
   function getTarget(target) {
     var input = $('#report_options_' + target);
 
@@ -139,11 +152,4 @@
     var key = sessionStorage.key(i);
     setVisiblity(key, sessionStorage.getItem(key))
   }
-
-  $('#problems_picture').bind('change', function() {
-    var size_in_megabytes = this.files[0].size/1024/1024;
-    if (size_in_megabytes > 5) {
-      alert('Maximum file size is 5MB. Please choose a smaller file.');
-    }
-  });
 </script>
