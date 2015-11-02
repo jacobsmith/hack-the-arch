@@ -1,7 +1,7 @@
 module Penetrations
   def generate(helper, opts)
     @helper = helper
-    @penetrations = opts[:penetrations].values || default_penetrations
+    @penetrations = opts[:penetrations].values
     recipe
   end
 
@@ -59,51 +59,5 @@ module Penetrations
       green: '00FF00'
     }
     colors[color]
-  end
-
-  def default_penetrations
-    [
-      {
-        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
-        system_vulnerable: "172.16.203.134",
-        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
-        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
-        severity: :critical,
-        proof_of_concept_code: "def testing\n  this should be indendted\nend"
-      },
-      {
-        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
-        system_vulnerable: "172.16.203.134",
-        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
-        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
-        severity: :high,
-        proof_of_concept_code: "def testing\n  this should be indendted\nend"
-      },
-      {
-        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
-        system_vulnerable: "172.16.203.134",
-        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
-        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
-        severity: :medium,
-        proof_of_concept_code: "def testing\n  this should be indendted\nend"
-      },
-      {
-        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
-        system_vulnerable: "172.16.203.134",
-        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
-        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
-        severity: :low,
-        proof_of_concept_code: "def testing\n  this should be indendted\nend"
-      },
-      {
-        vulnerability: 'Ability Server 2.34 FTP STOR Buffer Overflow',
-        system_vulnerable: "172.16.203.134",
-        vulnerability_explanation: "Ability Server 2.34 is subject to a buffer overflow vulnerability in STOR field. Attackers can use this vulnerability to cause arbitrary remote code execution and take completely control over the system. When performing the penetration test, John noticed an outdated version of Ability Server running from the service enumeration phase. In addition, the operating system was different from the known public exploit. A rewritten exploit was needed in order for successful code execution to occur. Once the exploit was rewritten, a targeted attack was performed on the system which gave John full administrative access over the system.",
-        vulnerability_fix: "The publishers of the Ability Server have issued a patch to fix this known issue. It can be found here: http://www.code-crafters.com/abilityserver/",
-        severity: :note,
-        proof_of_concept_code: "def testing\n  this should be indendted\nend"
-      }
-
-    ]
   end
 end

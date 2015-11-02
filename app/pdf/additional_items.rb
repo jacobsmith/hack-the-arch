@@ -1,7 +1,7 @@
 module AdditionalItems
   def generate(helper, opts)
     @helper = helper
-    @additional_items_text = opts[:additional_items] || default_additional_items_text
+    @additional_items_text = opts[:additional_items]
     recipe
   end
 
@@ -12,10 +12,4 @@ module AdditionalItems
   end
 
   private
-
-  def default_additional_items_text
-    <<-EOF
-    This section is placed for any additional items that were not mentioned in the overall report.
-    EOF
-  end
 end
