@@ -16,7 +16,7 @@
     <%= penetration_instance.text_area :vulnerability_fix, value: penetration[:vulnerability_fix] %>
 
     <%= penetration_instance.label :severity %>
-    <%= penetration_instance.text_field :severity, value: penetration[:severity] %>
+    <%= select_tag 'report[options][penetrations][' + key.to_s + '][severity]', options_for_select(Report.severity_levels) %>
 
     <%= penetration_instance.label :proof_of_concept_code %>
     <%= penetration_instance.text_field :proof_of_concept_code, value: penetration[:proof_of_concept_code] %>
@@ -25,6 +25,7 @@
   <% end %>
 </div>
 
+<br>
 <a href="#noredirect" onclick="addNewPenetrationTarget()">Add New Penetration Target</a>
 <hr>
 
@@ -55,18 +56,18 @@
 
     // Vulnerability Explanation
     $('<label for="report[options][penetrations][' + newGuid + '][vulnerability_explanation]">Vulnerability Explanation</label>').appendTo(penetrations);
-    $('<input value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_explanation]" id="report_options_penetrations_' + newGuid + '_vulnerability_explanation">').appendTo(penetrations);
+    $('<textarea value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_explanation]" id="report_options_penetrations_' + newGuid + '_vulnerability_explanation"></textarea>').appendTo(penetrations);
 
     // Vulnerability Fix
     $('<label for="report[options][penetrations][' + newGuid + '][vulnerability_fix]">Vulnerability Fix</label>').appendTo(penetrations);
-    $('<input value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_fix]" id="report_options_penetrations_' + newGuid + '_vulnerability_fix">').appendTo(penetrations);
+    $('<textarea value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_fix]" id="report_options_penetrations_' + newGuid + '_vulnerability_fix"></textarea>').appendTo(penetrations);
 
     // Severity
     $('<label for="report[options][penetrations][' + newGuid + '][severity]">Severity</label>').appendTo(penetrations);
-    $('<input value="" type="text" name="report[options][penetrations][' + newGuid + '][severity]" id="report_options_penetrations_' + newGuid + '_severity">').appendTo(penetrations);
+    $('<select name="report[options][penetrations][' + newGuid + '][severity]" id="report_options_penetrations_' + newGuid + '_severity"><option value="critical">CRITICAL</option><option value="high">HIGH</option><option value="medium">MEDIUM</option><option value="low">LOW</option><option value="note">NOTE</option></select>').appendTo(penetrations);
 
     // Proof of Concept Code
     $('<label for="report[options][penetrations][' + newGuid + '][proof_of_concept_code]">Proof of Concept Code</label>').appendTo(penetrations);
-    $('<input value="" type="text" name="report[options][penetrations][' + newGuid + '][proof_of_concept_code]" id="report_options_penetrations_' + newGuid + '_proof_of_concept_code">').appendTo(penetrations);
+    $('<textarea value="" type="text" name="report[options][penetrations][' + newGuid + '][proof_of_concept_code]" id="report_options_penetrations_' + newGuid + '_proof_of_concept_code"></textarea>').appendTo(penetrations);
   }
 </script>

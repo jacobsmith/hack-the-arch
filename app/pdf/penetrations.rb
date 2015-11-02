@@ -47,7 +47,7 @@ module Penetrations
       low: "<color rgb='#{get_rgb_color(:yellow)}'>LOW</color>",
       note: "<color rgb='#{get_rgb_color(:green)}'>NOTE</color>"
     }
-    severities[current_severity]
+    severities[current_severity.to_sym]
   end
 
   def get_rgb_color(color)

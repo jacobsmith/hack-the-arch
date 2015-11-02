@@ -2,27 +2,16 @@
 
 <h1>Listing Reports</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Options</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% @reports.each do |report| %>
+  <span><%= report.options['report_name'] %></span><br>
+  <span><%= report.updated_at.to_formatted_s(:long)  %></span><br>
+  <span><%= link_to 'Edit', edit_report_path(report) %></span> |
+  <span><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></span> |
+  <span><%= link_to 'Download as PDF', get_pdf_path(report) %></span>
+  <hr>
+<% end %>
 
-  <tbody>
-    <% @reports.each do |report| %>
-      <tr>
-        <td><%= report.options %></td>
-        <td><%= link_to 'Show', report %></td>
-        <td><%= link_to 'Edit', edit_report_path(report) %></td>
-        <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'PDF', get_pdf_path(report) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<br>
 <br>
 
 <%= link_to 'New Report', new_report_path %>

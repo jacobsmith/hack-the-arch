@@ -12,6 +12,12 @@
   <% end %>
 
   <%= f.fields_for :options, OpenStruct.new(f.object.options || {}) do |f2| %>
+
+    <div class="field">
+      <%= f2.label :report_name %><br>
+      <%= f2.text_field :report_name  %>
+    </div>
+
     <%= render 'show_hide', target: :student_name %>
     <div class="field">
       <%= f2.label :student_name %><br>
@@ -67,16 +73,20 @@
     </div>
 
     <%= render 'show_hide', target: :enumerations %>
-    <%= f2.label :enumerations, "Enumerated Services" %>
-    <%= f2.fields_for :enumerations, OpenStruct.new(f2.object.enumerations || {}) do |f3| %>
-      <%= render 'service_enumerations', f: f3 %>
-    <% end %>
+    <div>
+      <%= f2.label :enumerations, "Enumerated Services" %>
+      <%= f2.fields_for :enumerations, OpenStruct.new(f2.object.enumerations || {}) do |f3| %>
+        <%= render 'service_enumerations', f: f3 %>
+      <% end %>
+    </div>
 
     <%= render 'show_hide', target: :penetrations %>
-    <%= f2.label :penetrations, "Successful Penetrations" %>
-    <%= f2.fields_for :penetrations, OpenStruct.new(f2.object.penetrations || {}) do |f3| %>
+    <div>
+      <%= f2.label :penetrations, "Successful Penetrations" %>
+      <%= f2.fields_for :penetrations, OpenStruct.new(f2.object.penetrations || {}) do |f3| %>
       <%= render 'penetrations', f: f3 %>
-    <% end %>
+      <% end %>
+    </div>
 
     <%= render 'show_hide', target: :maintaining_access %>
     <div class="field">
@@ -129,4 +139,11 @@
     var key = sessionStorage.key(i);
     setVisiblity(key, sessionStorage.getItem(key))
   }
+
+  $('#problems_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
 </script>

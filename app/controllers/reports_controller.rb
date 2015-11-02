@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all
+    @reports = Report.where(user: current_user)
   end
 
   # GET /reports/1
@@ -29,17 +29,18 @@ class ReportsController < ApplicationController
   def get_pdf
     report = ReportPdf.new
     report.set_options(@report.options)
-    send_data report.generate!
+    send_data report.generate!, type: "application.pdf", filename: @report.options['report_name'] + ".pdf"
   end
 
   # POST /reports
   # POST /reports.json
   def create
     @report = Report.new(report_params)
+    @report.user = current_user
 
     respond_to do |format|
       if @report.save
-        format.html { redirect_to @report, notice: 'Report was successfully created.' }
+        format.html { redirect_to reports_url, notice: 'Report was successfully created.' }
         format.json { render :show, status: :created, location: @report }
       else
         format.html { render :new }
@@ -53,10 +54,10 @@ class ReportsController < ApplicationController
   def update
     respond_to do |format|
       if @report.update(report_params)
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
+        format.html { redirect_to reports_url, notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
-        format.html { render :edit }
+        format.html { render reports_url }
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
     end
@@ -76,6 +77,9 @@ class ReportsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_report
       @report = Report.find(params[:id])
+      if @report.user != current_user
+        render nothing: true, status: :unauthorized
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

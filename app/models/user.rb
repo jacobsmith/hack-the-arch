@@ -5,11 +5,12 @@ class User < ActiveRecord::Base
   before_save   :downcase_email
   before_create :create_activation_digest
 	has_many :user_problems, dependent: :destroy
+	has_many :reports, dependent: :destroy
 
 	validates :fname,  presence: true, length: { maximum: 50 }
 	validates :lname,  presence: true, length: { maximum: 50 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-	validates :email, presence: true, length: { maximum: 255 }, 
+	validates :email, presence: true, length: { maximum: 255 },
 										format: { with: VALID_EMAIL_REGEX },
 										uniqueness: { case_sensitive: false }
 	has_secure_password
@@ -70,7 +71,7 @@ class User < ActiveRecord::Base
 	def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
   end
-	
+
 	def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
@@ -81,7 +82,7 @@ class User < ActiveRecord::Base
 			cache.value.to_i
 		else
 			if subtract_hint_points_before_solve?
-				score = Submission.where(user_id: self.id).sum(:points) - 
+				score = Submission.where(user_id: self.id).sum(:points) -
 				HintRequest.where(user_id: self.id).sum(:points)
 			else
 				score = 0
@@ -96,7 +97,7 @@ class User < ActiveRecord::Base
 			end
 
 			# Update cache
-			if cache 
+			if cache
 				cache.update(score)
 			else
 				Cache.create(key: 'user_'+self.id.to_s+'_score', value: score, cache_valid: true)
