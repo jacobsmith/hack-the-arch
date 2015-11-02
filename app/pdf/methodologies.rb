@@ -5,7 +5,7 @@ module Methodologies
     @methodologies_overview_text = opts[:methodologies_overview] || default_methodologies_overview_text
     @information_gathering_text = opts[:information_gathering] || default_information_gathering_text
     @service_enumeration_text = opts[:service_enumeration] || default_service_enumerations_text
-    @enumerations = opts[:enumerations] || default_enumerations
+    @enumerations = opts[:enumerations].values || default_enumerations
     recipe
   end
 

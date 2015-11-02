@@ -16,7 +16,10 @@ class ReportsController < ApplicationController
   def new
     @report = Report.new
     @report.options['enumerations'] = {}
-    @report.options['enumerations']['ABCDEFG'] = { server: '', tcp: '', udp: ''}
+    @report.options['enumerations'][SecureRandom.uuid] = { server: '', tcp: '', udp: ''}
+
+    @report.options['penetrations'] = {}
+    @report.options['penetrations'][SecureRandom.uuid] = {}
   end
 
   # GET /reports/1/edit

@@ -12,52 +12,121 @@
   <% end %>
 
   <%= f.fields_for :options, OpenStruct.new(f.object.options || {}) do |f2| %>
+    <%= render 'show_hide', target: :student_name %>
     <div class="field">
       <%= f2.label :student_name %><br>
       <%= f2.text_field :student_name  %>
     </div>
 
+    <%= render 'show_hide', target: :introduction %>
     <div class="field">
       <%= f2.label :introduction %><br>
       <%= f2.text_area :introduction %>
     </div>
 
+    <%= render 'show_hide', target: :objective %>
+    <div class="field">
+      <%= f2.label :objective %><br>
+      <%= f2.text_area :objective %>
+    </div>
+
+    <%= render 'show_hide', target: :requirements %>
     <div class="field">
       <%= f2.label :requirements %><br>
       <%= f2.text_area :requirements %>
     </div>
 
+    <%= render 'show_hide', target: :high_level_summary %>
     <div class="field">
       <%= f2.label :high_level_summary %><br>
       <%= f2.text_area :high_level_summary %>
     </div>
 
+    <%= render 'show_hide', target: :recommendations %>
     <div class="field">
       <%= f2.label :recommendations %><br>
       <%= f2.text_area :recommendations %>
     </div>
 
+    <%= render 'show_hide', target: :methodologies_overview %>
     <div class="field">
       <%= f2.label :methodologies_overview %><br>
       <%= f2.text_area :methodologies_overview %>
     </div>
 
+    <%= render 'show_hide', target: :information_gathering %>
     <div class="field">
       <%= f2.label :information_gathering %><br>
       <%= f2.text_area :information_gathering %>
     </div>
 
+    <%= render 'show_hide', target: :service_enumeration %>
     <div class="field">
-      <%= f2.label :service_enumeration %><br>
+      <%= f2.label :service_enumeration, "Service Enumeration Text" %><br>
       <%= f2.text_area :service_enumeration %>
     </div>
 
+    <%= render 'show_hide', target: :enumerations %>
+    <%= f2.label :enumerations, "Enumerated Services" %>
     <%= f2.fields_for :enumerations, OpenStruct.new(f2.object.enumerations || {}) do |f3| %>
       <%= render 'service_enumerations', f: f3 %>
     <% end %>
+
+    <%= render 'show_hide', target: :penetrations %>
+    <%= f2.label :penetrations, "Successful Penetrations" %>
+    <%= f2.fields_for :penetrations, OpenStruct.new(f2.object.penetrations || {}) do |f3| %>
+      <%= render 'penetrations', f: f3 %>
+    <% end %>
+
+    <%= render 'show_hide', target: :maintaining_access %>
+    <div class="field">
+      <%= f2.label :maintaining_access %>
+      <%= f2.text_area :maintaining_access %>
+    </div>
+
+    <%= render 'show_hide', target: :house_cleaning %>
+    <div class="field">
+      <%= f2.label :house_cleaning %>
+      <%= f2.text_area :house_cleaning %>
+    </div>
+
+    <%= render 'show_hide', target: :additional_items %>
+    <div class="field">
+      <%= f2.label :additional_items %>
+      <%= f2.text_area :additional_items %>
+    </div>
 
     <div class="actions">
       <%= f.submit %>
     </div>
   <% end %>
 <% end %>
+
+<script type="text/javascript">
+  function getTarget(target) {
+    var input = $('#report_options_' + target);
+
+    if (input.length == 0) {
+      input = $('.' + target + '_toggle' );
+    }
+
+    return input;
+  }
+
+  function toggle(target) {
+    input = getTarget(target);
+    input.toggle();
+
+    sessionStorage.setItem(target, input.is(':visible'))
+  }
+
+  function setVisiblity(target, shouldBeVisibile) {
+    shouldBeVisibile === "true" ? getTarget(target).show() : getTarget(target).hide()
+  }
+
+  var i = sessionStorage.length;
+  while(i--) {
+    var key = sessionStorage.key(i);
+    setVisiblity(key, sessionStorage.getItem(key))
+  }
+</script>

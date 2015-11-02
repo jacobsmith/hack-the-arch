@@ -1,7 +1,7 @@
 module Penetrations
   def generate(helper, opts)
     @helper = helper
-    @penetrations = opts[:penetrations] || default_penetrations
+    @penetrations = opts[:penetrations].values || default_penetrations
     recipe
   end
 

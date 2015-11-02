@@ -18,10 +18,6 @@ module IntroObjectiveRequirements
 
     @helper.subsection(self, "Requirements")
     @helper.text(self, @requirements_text)
-      bullet_item('Overall High-Level Summary and Recommendations (non-technical)')
-      bullet_item('Methodology walkthrough and detailed outline of steps taken')
-      bullet_item('Each finding with included screenshots, walkthrough, sample code, and proof.txt if applicable.')
-      bullet_item('Any additional items that were not included')
   end
 
   private
@@ -41,6 +37,12 @@ module IntroObjectiveRequirements
   def default_requirements_text
     <<-EOF
       The student will be required to fill out this penetration testing report fully and to include the following sections:
+      <ul>
+        <li>Overall High-Level Summary and Recommendations (non-technical)</li>
+        <li>Methodology walkthrough and detailed outline of steps taken</li>
+        <li>Each finding with included screenshots, walkthrough, sample code, and proof.txt if applicable.</li>
+        <li>Any additional items that were not included</li>
+      </ul>
     EOF
   end
 

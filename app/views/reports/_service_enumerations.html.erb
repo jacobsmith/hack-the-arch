@@ -1,7 +1,8 @@
 <div class="enumerated-services">
   <% f.object.to_h.each do |key, enumerated_service| %> <!-- enumerated services (i.e., each of the servers we have found)-->
   <%= f.fields_for key do |service_discovered| %>
-  <div class="field">
+  <hr>
+  <div class="field enumerations_toggle">
     <%= service_discovered.label :server %>
     <%= service_discovered.text_field :server, value: enumerated_service[:server] %>
 
@@ -16,6 +17,7 @@
 </div>
 
 <a href="#noredirect" onclick="addNewEnumeratedService()">Add New Enumerated Service</a>
+<hr>
 
 <script type="text/javascript">
   var guid = function() {
@@ -32,6 +34,8 @@
   function addNewEnumeratedService(e) {
     var enumServices = $('.enumerated-services');
     var newGuid = guid();
+    $('<hr>').appendTo(enumServices);
+
     // Server
     $('<label for="report_options_enumerations_' + newGuid + '_server">Server</label>').appendTo(enumServices);
     $('<input value="" type="text" name="report[options][enumerations][' + newGuid + '][server]" id="report_options_enumerations_' + newGuid + '_server">').appendTo(enumServices);

@@ -1,7 +1,7 @@
 module HouseCleaning
   def generate(helper, opts)
     @helper = helper
-    @house_cleaning_text = opts[:house_cleaning_text] || default_house_cleaning_text
+    @house_cleaning_text = opts[:house_cleaning] || default_house_cleaning_text
     recipe
   end
 
