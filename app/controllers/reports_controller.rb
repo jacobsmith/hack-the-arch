@@ -85,7 +85,7 @@ class ReportsController < ApplicationController
     def set_report
       @report = Report.find(params[:id])
       if @report.user != current_user
-        render nothing: true, status: :unauthorized
+        redirect_to reports_path, notice: 'You do not have access to that report.'
       end
     end
 

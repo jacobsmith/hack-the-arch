@@ -24,8 +24,11 @@
       <span>Screenshots</span>
       <div>
         <% @screenshots.where(vulnerability_id: key.to_s).each do |screenshot| %>
-          <%= image_tag screenshot.file.url %>
-          <p><%= screenshot.caption %></p>
+          <div class="screenshot">
+            <%= image_tag screenshot.file.url %>
+            <p><%= screenshot.caption %></p>
+            <%= link_to 'Delete Screenshot', screenshot_path(screenshot), method: :delete, class: 'delete' %>
+          </div>
         <% end %>
       </div>
 
@@ -42,6 +45,21 @@
 <hr>
 
 <script type="text/javascript">
+  $('a.delete').click (function(){
+    if(confirm("Are you sure?")){
+      var screenshot = $(this).closest("div").get(0);
+      $.post(this.href, {_method:'delete'}, null, "script");
+      $(screenshot).hide();
+      return false;
+    } else {
+      //they clicked no.
+      return false;
+    }
+
+  });
+
+
+
   var guid = function() {
     function s4() {
       return Math.floor((1 + Math.random()) * 0x10000)
@@ -82,5 +100,8 @@
     // Proof of Concept Code
     $('<label for="report[options][penetrations][' + newGuid + '][proof_of_concept_code]">Proof of Concept Code</label>').appendTo(penetrations);
     $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][proof_of_concept_code]" id="report_options_penetrations_' + newGuid + '_proof_of_concept_code"></textarea>').appendTo(penetrations);
+
+    $('<a target="_blank" href="/screenshots/new?report_id=' + <%= @report.id %> + '&amp;vulnerability_id=' + newGuid + '">Add a screenshot</a>').appendTo(penetrations);
+
   }
 </script>

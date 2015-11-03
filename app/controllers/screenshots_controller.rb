@@ -1,6 +1,7 @@
 class ScreenshotsController < ApplicationController
   before_action :set_screenshot, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_report_and_vulnerability_present
+  before_action :ensure_report_and_vulnerability_present_for_new, only: :new
+
   # GET /screenshots/new
   def new
     @screenshot = Screenshot.new
@@ -17,7 +18,7 @@ class ScreenshotsController < ApplicationController
 
     respond_to do |format|
       if @screenshot.save
-        format.html { redirect_to @screenshot, notice: 'Screenshot was successfully created.' }
+        format.html { redirect_to most_recent_report, notice: 'Screenshot was successfully created.' }
         format.json { render :show, status: :created, location: @screenshot }
       else
         format.html { render :new }
@@ -31,7 +32,7 @@ class ScreenshotsController < ApplicationController
   def update
     respond_to do |format|
       if @screenshot.update(screenshot_params)
-        format.html { redirect_to @screenshot, notice: 'Screenshot was successfully updated.' }
+        format.html { redirect_to most_recent_report, notice: 'Screenshot was successfully updated.' }
         format.json { render :show, status: :ok, location: @screenshot }
       else
         format.html { render :edit }
@@ -45,21 +46,26 @@ class ScreenshotsController < ApplicationController
   def destroy
     @screenshot.destroy
     respond_to do |format|
-      format.html { redirect_to screenshots_url, notice: 'Screenshot was successfully destroyed.' }
+      format.html { redirect_to most_recent_report, notice: 'Screenshot was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    def ensure_report_and_vulnerability_present
-      if params[:screenshot][:vulnerability_id].blank? || params[:screenshot][:report_id].blank?
-        redirect_to reports_path(Report.where(user_id: current_user).last), notice: 'Please be sure the report and vulnerability are present (click "Add Screenshot" while editing a report).'
+    def most_recent_report
+      edit_report_path(Report.where(user_id: current_user).last)
+    end
+
+    def ensure_report_and_vulnerability_present_for_new
+      if (params[:vulnerability_id].blank? || params[:report_id].blank?)
+        redirect_to most_recent_report, notice: 'Please be sure the report and vulnerability are present (click "Add Screenshot" while editing a report).'
       end
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_screenshot
       @screenshot = Screenshot.find(params[:id])
+      redirect_to most_recent_report if Report.find(@screenshot.report_id).user != current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

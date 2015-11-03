@@ -39,6 +39,7 @@ module Penetrations
         # we read in the actual file to a StringIO instance so it works
         # on both local and remote storage locations
         image StringIO.new(screenshot.file.read), fit: [450, 450]
+        move_down 10
         text screenshot.caption
       end
 
