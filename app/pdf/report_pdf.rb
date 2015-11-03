@@ -33,7 +33,6 @@ class ReportPdf
       @pdf.extend(HouseCleaning).generate(@helper, @opts) #house_cleaning
       @pdf.extend(AdditionalItems).generate(@helper, @opts) #additional_items
 
-      @pdf.render_file "/Users/jacobsmith/test.pdf"
       @pdf.render
     end
 end
