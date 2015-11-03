@@ -61,6 +61,7 @@ class ReportsController < ApplicationController
   def update
     respond_to do |format|
       if @report.update(report_params)
+        save_report_audit
         format.html { redirect_to reports_url, notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
@@ -81,6 +82,23 @@ class ReportsController < ApplicationController
   end
 
   private
+
+    def save_report_audit
+      report = ReportPdf.new
+      report.set_options(@report.options)
+      report.set_screenshots(Screenshot.where(report_id: @report.id))
+
+      pdf = report.generate!
+
+      save_path = Rails.root.join('pdfs',"#{current_user.fname}_#{current_user.lname}_#{current_user.id}")
+      FileUtils.mkdir_p save_path
+
+      file_name = Time.now.strftime("%F_%T_report.pdf")
+      File.open(save_path.join(file_name), 'wb') do |file|
+        file << pdf
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_report
       @report = Report.find(params[:id])
