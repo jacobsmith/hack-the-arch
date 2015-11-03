@@ -10,6 +10,6 @@ module CoverPage
     move_down 20
     text @student_name, align: :center, size: 18
     move_down 30
-    text 'Image goes here'
+    image Rails.root.join('app', 'assets', 'images', 'mcpa-black.png'), fit: [450, 450], position: :center
   end
 end

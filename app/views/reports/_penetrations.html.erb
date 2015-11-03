@@ -1,28 +1,40 @@
 <div class="penetrations penetrations_toggle">
   <% f.object.to_h.each do |key, penetration| %> <!-- enumerated services (i.e., each of the servers we have found)-->
-  <%= f.fields_for key do |penetration_instance| %>
-  <hr>
-  <div class="field">
-    <%= penetration_instance.label :vulnerability %>
-    <%= penetration_instance.text_field :vulnerability, value: penetration[:vulnerability] %>
+    <%= f.fields_for key do |penetration_instance| %>
+    <hr>
+    <div class="field">
+      <%= penetration_instance.label :vulnerability %>
+      <%= penetration_instance.text_field :vulnerability, value: penetration[:vulnerability] %>
 
-    <%= penetration_instance.label :system_vulnerable %>
-    <%= penetration_instance.text_field :system_vulnerable, value: penetration[:system_vulnerable] %>
+      <%= penetration_instance.label :system_vulnerable %>
+      <%= penetration_instance.text_field :system_vulnerable, value: penetration[:system_vulnerable] %>
 
-    <%= penetration_instance.label :vulnerability_explanation %>
-    <%= penetration_instance.text_area :vulnerability_explanation, value: penetration[:vulnerability_explanation], rows: 4 %>
+      <%= penetration_instance.label :vulnerability_explanation %>
+      <%= penetration_instance.text_area :vulnerability_explanation, value: penetration[:vulnerability_explanation], rows: 4 %>
 
-    <%= penetration_instance.label :vulnerability_fix %>
-    <%= penetration_instance.text_area :vulnerability_fix, value: penetration[:vulnerability_fix], rows: 4 %>
+      <%= penetration_instance.label :vulnerability_fix %>
+      <%= penetration_instance.text_area :vulnerability_fix, value: penetration[:vulnerability_fix], rows: 4 %>
 
-    <%= penetration_instance.label :severity %>
-    <%= select_tag 'report[options][penetrations][' + key.to_s + '][severity]', options_for_select(Report.severity_levels) %>
+      <%= penetration_instance.label :severity %>
+      <%= select_tag 'report[options][penetrations][' + key.to_s + '][severity]', options_for_select(Report.severity_levels) %>
 
-    <%= penetration_instance.label :proof_of_concept_code %>
-    <%= penetration_instance.text_field :proof_of_concept_code, value: penetration[:proof_of_concept_code] %>
-  </div>
-  <% end %>
-  <% end %>
+      <%= penetration_instance.label :proof_of_concept_code %>
+      <%= penetration_instance.text_field :proof_of_concept_code, value: penetration[:proof_of_concept_code] %>
+
+      <span>Screenshots</span>
+      <div>
+        <% @screenshots.where(vulnerability_id: key.to_s).each do |screenshot| %>
+          <%= image_tag screenshot.file.url %>
+          <p><%= screenshot.caption %></p>
+        <% end %>
+      </div>
+
+      <div>
+        <%= link_to 'Add a screenshot', new_screenshot_path(report_id: @report.id, vulnerability_id: key.to_s), target: '_blank' %>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
 </div>
 
 <br>

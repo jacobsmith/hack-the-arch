@@ -119,7 +119,7 @@
       <%= render "example_text", example: :penetrations %>
 
       <%= f2.fields_for :penetrations, OpenStruct.new(f2.object.penetrations || {}) do |f3| %>
-      <%= render 'penetrations', f: f3 %>
+      <%= render 'penetrations', f: f3, top_level_form: f %>
       <% end %>
     </div>
 

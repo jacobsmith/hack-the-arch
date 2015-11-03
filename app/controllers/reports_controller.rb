@@ -20,15 +20,22 @@ class ReportsController < ApplicationController
 
     @report.options['penetrations'] = {}
     @report.options['penetrations'][SecureRandom.uuid] = {}
+
+
+    vulnerability_ids = @report.options['penetrations'].keys
+    @screenshots = Screenshot.where(vulnerability_id: vulnerability_ids)
   end
 
   # GET /reports/1/edit
   def edit
+    vulnerability_ids = @report.options['penetrations'].keys
+    @screenshots = Screenshot.where(vulnerability_id: vulnerability_ids)
   end
 
   def get_pdf
     report = ReportPdf.new
     report.set_options(@report.options)
+    report.set_screenshots(Screenshot.where(report_id: @report.id))
     send_data report.generate!, type: "application.pdf", filename: @report.options['report_name'] + ".pdf"
   end
 

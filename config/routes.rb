@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :screenshots, only: [:new, :create, :edit, :update]
   resources :reports
   get 'reports/:id/pdf' => 'reports#get_pdf', as: :get_pdf
   # The priority is based upon order of creation: first created -> highest priority.

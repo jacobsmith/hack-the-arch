@@ -13,12 +13,16 @@ class ReportPdf
       @opts = opts
     end
 
+    def set_screenshots(screenshots)
+      @screenshots = screenshots
+    end
+
     def generate!
       @pdf.extend(CoverPage).generate(@opts) # student_name
       @pdf.extend(IntroObjectiveRequirements).generate(@helper, @opts) # introduction, objective, requirements
       @pdf.extend(HighLevelSummary).generate(@helper, @opts) # high_level_summary, recommendations
       @pdf.extend(Methodologies).generate(@helper, @opts) # methodologies_overview, information_gathering, service_enumeration, enumerations (of form: [ {server: '192...', tcp: '1, 2, 3', udp: '4, 5, 6'}, ...])
-      @pdf.extend(Penetrations).generate(@helper, @opts)
+      @pdf.extend(Penetrations).generate(@helper, @opts, @screenshots)
         # vulnerability
         # system_vulnerable
         # vulnerability_explanation

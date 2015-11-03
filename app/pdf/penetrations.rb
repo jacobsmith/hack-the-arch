@@ -1,7 +1,9 @@
 module Penetrations
-  def generate(helper, opts)
+  def generate(helper, opts, screenshots)
     @helper = helper
-    @penetrations = opts[:penetrations].values
+    @screenshots = screenshots
+
+    @penetrations = opts[:penetrations]
     recipe
   end
 
@@ -9,7 +11,7 @@ module Penetrations
     @helper.section(self, "Penetration")
     move_down 20
 
-    @penetrations.each do |penetration|
+    @penetrations.each do |id, penetration|
       start_new_page
       @helper.subsection(self, penetration[:vulnerability])
       text "<b>Vulnerability Exploited:</b> #{penetration[:vulnerability]}", inline_format: true
@@ -32,6 +34,13 @@ module Penetrations
       text "<b>Proof of Concept Code:</b>", inline_format: true
       move_down 20
       text penetration[:proof_of_concept_code].gsub!(" ", "#{Prawn::Text::NBSP}"), font_family: "Courier", size: 12
+
+      @screenshots.where(vulnerability_id: id).each do |screenshot|
+        # we read in the actual file to a StringIO instance so it works
+        # on both local and remote storage locations
+        image StringIO.new(screenshot.file.read), fit: [450, 450]
+        text screenshot.caption
+      end
 
       move_down 20
     end
