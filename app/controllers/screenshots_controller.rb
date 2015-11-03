@@ -18,7 +18,7 @@ class ScreenshotsController < ApplicationController
 
     respond_to do |format|
       if @screenshot.save
-        format.html { redirect_to most_recent_report, notice: 'Screenshot was successfully created.' }
+        format.html { render :close_window, notice: 'Screenshot was successfully created.' }
         format.json { render :show, status: :created, location: @screenshot }
       else
         format.html { render :new }
