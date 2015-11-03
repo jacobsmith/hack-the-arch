@@ -90,11 +90,14 @@ class ReportsController < ApplicationController
       report.set_screenshots(Screenshot.where(report_id: @report.id))
 
       pdf = report.generate!
+      timestamp = Time.now.strftime("%F_%T")
 
-      save_path = Rails.root.join('pdfs',"#{current_user.fname}_#{current_user.lname}_#{current_user.id}")
+      report_name = !@report.options['report_name'].blank? ? @report.options['report_name'] : "untitled_report_#{timestamp}"
+
+      save_path = Rails.root.join('pdfs',"#{current_user.fname}_#{current_user.lname}_#{current_user.id}", report_name)
       FileUtils.mkdir_p save_path
 
-      file_name = Time.now.strftime("%F_%T_report.pdf")
+      file_name = "#{timestamp}_report.pdf"
       File.open(save_path.join(file_name), 'wb') do |file|
         file << pdf
       end
