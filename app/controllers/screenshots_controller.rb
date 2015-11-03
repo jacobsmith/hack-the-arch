@@ -57,7 +57,7 @@ class ScreenshotsController < ApplicationController
     end
 
     def ensure_report_and_vulnerability_present_for_new
-      if (params[:vulnerability_id].blank? || params[:report_id].blank?)
+      if params[:vulnerability_id].blank?
         redirect_to most_recent_report, notice: 'Please be sure the report and vulnerability are present (click "Add Screenshot" while editing a report).'
       end
     end
