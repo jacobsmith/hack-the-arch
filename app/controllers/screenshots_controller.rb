@@ -53,7 +53,13 @@ class ScreenshotsController < ApplicationController
 
   private
     def most_recent_report
-      edit_report_path(Report.where(user_id: current_user).last)
+      report = Report.where(user_id: current_user).last
+
+      if report
+        edit_report_path(report)
+      else
+        reports_path
+      end
     end
 
     def ensure_report_and_vulnerability_present_for_new
