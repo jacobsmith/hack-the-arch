@@ -8,7 +8,7 @@ module Penetrations
   end
 
   def recipe
-    @helper.section(self, "Penetration")
+    @helper.full_page_section(self, "Penetration")
     move_down 20
 
     @penetrations.each do |id, penetration|

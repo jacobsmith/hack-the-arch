@@ -32,6 +32,7 @@ class ReportPdf
       @pdf.extend(MaintainingAccess).generate(@helper, @opts) #maintaining_access
       @pdf.extend(HouseCleaning).generate(@helper, @opts) #house_cleaning
       @pdf.extend(AdditionalItems).generate(@helper, @opts) #additional_items
+      @pdf.extend(PageNumbers).generate
 
       @pdf.render
     end

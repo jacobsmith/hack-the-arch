@@ -6,6 +6,14 @@ class ReportHelper
     @subsection_number = 0
   end
 
+  def full_page_section(pdf, content)
+      pdf.start_new_page
+      @section_number += 1
+      @subsection_number = 0
+      pdf.move_down 200
+      pdf.text "<u>#{section_subsection} #{content}</u>", size: 36, align: :center, inline_format: true
+  end
+
   def section(pdf, content)
       pdf.start_new_page
       @section_number += 1
