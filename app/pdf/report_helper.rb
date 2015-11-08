@@ -28,25 +28,27 @@ class ReportHelper
     pdf.move_down 20
   end
 
-  def text(pdf, content)
+  def text(pdf, content, opts = {})
     content.each_line do |line|
       if line.strip.start_with?('<ul>', '</ul>')
         # nop, we don't want those lines, just triggering we're in a list
       elsif line.strip.start_with? '<li>'
         line.gsub!('<li>', '')
         line.gsub!('</li>', '')
-        bullet_item(pdf, line)
+        bullet_item(pdf, line, opts)
       else
-        pdf.text line, indent_paragraphs: 30
+        # set default indentation for paragraphs
+        opts[:indent_paragraphs] = opts[:indent_paragraphs] || opts[:indent_paragraphs] = 30
+        pdf.text(line, opts)
       end
     end
   end
 
   private
 
-  def bullet_item(pdf, string, level = 1)
+  def bullet_item(pdf, string, opts = {}, level = 1)
     pdf.indent (15 * level), 0 do
-      pdf.text "• " + string
+      pdf.text "• " + string, opts
     end
   end
 

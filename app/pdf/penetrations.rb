@@ -14,18 +14,18 @@ module Penetrations
     @penetrations.each do |id, penetration|
       start_new_page
       @helper.subsection(self, penetration[:vulnerability])
-      text "<b>Vulnerability Exploited:</b> #{penetration[:vulnerability]}", inline_format: true
+      @helper.text(self, "<b>Vulnerability Exploited:</b> #{penetration[:vulnerability]}", inline_format: true)
       move_down 20
 
-      text "<b>System Vulnerable:</b> #{penetration[:system_vulnerable]}", inline_format: true
-      move_down 20
-
-      text "<b>Vulnerability Explanation:</b>", inline_format: true
-      text "#{penetration[:vulnerability_explanation]}",  indent_paragraphs: 30
+      @helper.text(self, "<b>System Vulnerable:</b> #{penetration[:system_vulnerable]}", inline_format: true)
       move_down 20
 
       text "<b>Vulnerability Explanation:</b>", inline_format: true
-      text "#{penetration[:vulnerability_fix]}", indent_paragraphs: 30
+      @helper.text(self, "#{penetration[:vulnerability_explanation]}",  indent_paragraphs: 30)
+      move_down 20
+
+      text "<b>Vulnerability Explanation:</b>", inline_format: true
+      @helper.text(self, "#{penetration[:vulnerability_fix]}", indent_paragraphs: 30)
       move_down 20
 
       text "<b>Severity:</b> #{get_severity_text(penetration[:severity])}", inline_format: true
@@ -40,7 +40,7 @@ module Penetrations
         # on both local and remote storage locations
         image StringIO.new(screenshot.file.read), fit: [450, 450]
         move_down 10
-        text screenshot.caption
+        @helper.text(self, screenshot.caption)
       end
 
       move_down 20
