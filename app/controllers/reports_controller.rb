@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy, :get_pdf]
+  before_action :set_report, only: [:show, :edit, :update, :destroy, :get_pdf, :new_penetration]
 
   # GET /reports
   # GET /reports.json
@@ -24,6 +24,18 @@ class ReportsController < ApplicationController
 
     vulnerability_ids = @report.options['penetrations'].keys
     @screenshots = Screenshot.where(vulnerability_id: vulnerability_ids)
+  end
+
+  def new_penetration
+    respond_to do |format|
+      @existing_penetration = {}
+      @vulnerability_id = SecureRandom.uuid
+
+      vulnerability_ids = @report.options['penetrations'].keys
+      @screenshots = Screenshot.where(vulnerability_id: vulnerability_ids)
+
+      format.js { render :new_penetration }
+    end
   end
 
   # GET /reports/1/edit

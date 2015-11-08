@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :screenshots, only: [:new, :create, :edit, :update, :destroy]
   resources :reports
+  get '/reports/:id/penetrations/new' => 'reports#new_penetration', as: :add_new_penetration
   get 'reports/:id/pdf' => 'reports#get_pdf', as: :get_pdf
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

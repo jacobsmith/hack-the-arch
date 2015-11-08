@@ -18,89 +18,89 @@
 
   <%= f.fields_for :options, OpenStruct.new(f.object.options || {}) do |f2| %>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :report_name %><br>
-      <%= f2.text_field :report_name  %>
+      <%= f2.text_field :report_name, class: 'form-control' %>
     </div>
 
     <%= render 'show_hide', target: :student_name %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :student_name %><br>
       <div class="student_name_toggle">
         <%= render "example_text", example: :student_name %>
-        <%= f2.text_field :student_name  %>
+        <%= f2.text_field :student_name, class: 'form-control'  %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :introduction %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :introduction %><br>
       <div class="introduction_toggle">
         <%= render "example_text", example: :introduction %>
-        <%= f2.text_area :introduction, rows: 4 %>
+        <%= f2.text_area :introduction, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :objective %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :objective %><br>
       <div class="objective_toggle">
         <%= render "example_text", example: :objective %>
-        <%= f2.text_area :objective, rows: 4 %>
+        <%= f2.text_area :objective, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :requirements %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :requirements %><br>
       <div class="requirements_toggle">
         <%= render "example_text", example: :requirements %>
-        <%= f2.text_area :requirements, rows: 4  %>
+        <%= f2.text_area :requirements, rows: 4, class: 'form-control'  %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :high_level_summary %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :high_level_summary %><br>
       <div class="high_level_summary_toggle">
         <%= render "example_text", example: :high_level_summary %>
-        <%= f2.text_area :high_level_summary, rows: 4 %>
+        <%= f2.text_area :high_level_summary, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :recommendations %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :recommendations %><br>
       <div class="recommendations_toggle">
         <%= render "example_text", example: :recommendations %>
-        <%= f2.text_area :recommendations, rows: 4 %>
+        <%= f2.text_area :recommendations, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :methodologies_overview %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :methodologies_overview %><br>
       <div class="methodologies_overview_toggle">
         <%= render "example_text", example: :methodologies_overview %>
-        <%= f2.text_area :methodologies_overview, rows: 4 %>
+        <%= f2.text_area :methodologies_overview, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :information_gathering %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :information_gathering %><br>
       <div class="information_gathering_toggle">
         <%= render "example_text", example: :information_gathering %>
-        <%= f2.text_area :information_gathering, rows: 4 %>
+        <%= f2.text_area :information_gathering, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :service_enumeration %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :service_enumeration, "Service Enumeration Text" %><br>
       <div class="service_enumeration_toggle">
         <%= render "example_text", example: :service_enumeration %>
-        <%= f2.text_area :service_enumeration, rows: 4 %>
+        <%= f2.text_area :service_enumeration, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
@@ -124,34 +124,34 @@
     </div>
 
     <%= render 'show_hide', target: :maintaining_access %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :maintaining_access %>
       <div class="maintaining_access_toggle">
         <%= render "example_text", example: :maintaining_access %>
-        <%= f2.text_area :maintaining_access, rows: 4 %>
+        <%= f2.text_area :maintaining_access, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :house_cleaning %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :house_cleaning %>
       <div class="house_cleaning_toggle">
         <%= render "example_text", example: :house_cleaning %>
-        <%= f2.text_area :house_cleaning, rows: 4 %>
+        <%= f2.text_area :house_cleaning, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <%= render 'show_hide', target: :additional_items %>
-    <div class="field">
+    <div class="field form-group">
       <%= f2.label :additional_items %>
       <div class="additional_items_toggle">
         <%= render "example_text", example: :additional_items %>
-        <%= f2.text_area :additional_items, rows: 4 %>
+        <%= f2.text_area :additional_items, rows: 4, class: 'form-control' %>
       </div>
     </div>
 
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit 'Update Report', class: 'btn btn-primary' %>
     </div>
   <% end %>
 <% end %>

@@ -1,47 +1,14 @@
 <div class="penetrations penetrations_toggle">
-  <% f.object.to_h.each do |key, penetration| %> <!-- enumerated services (i.e., each of the servers we have found)-->
-    <%= f.fields_for key do |penetration_instance| %>
+  <% f.object.to_h.each do |vulnerability_id, penetration| %> <!-- enumerated services (i.e., each of the servers we have found)-->
+    <%= f.fields_for vulnerability_id do |penetration_instance| %>
     <hr>
-    <div class="field">
-      <%= penetration_instance.label :vulnerability %>
-      <%= penetration_instance.text_field :vulnerability, value: penetration[:vulnerability] %>
-
-      <%= penetration_instance.label :system_vulnerable %>
-      <%= penetration_instance.text_field :system_vulnerable, value: penetration[:system_vulnerable] %>
-
-      <%= penetration_instance.label :vulnerability_explanation %>
-      <%= penetration_instance.text_area :vulnerability_explanation, value: penetration[:vulnerability_explanation], rows: 4 %>
-
-      <%= penetration_instance.label :vulnerability_fix %>
-      <%= penetration_instance.text_area :vulnerability_fix, value: penetration[:vulnerability_fix], rows: 4 %>
-
-      <%= penetration_instance.label :severity %>
-      <%= select_tag 'report[options][penetrations][' + key.to_s + '][severity]', options_for_select(Report.severity_levels) %>
-
-      <%= penetration_instance.label :proof_of_concept_code %>
-      <%= penetration_instance.text_field :proof_of_concept_code, value: penetration[:proof_of_concept_code] %>
-
-      <span>Screenshots</span>
-      <div>
-        <% @screenshots.where(vulnerability_id: key.to_s).each do |screenshot| %>
-          <div class="screenshot">
-            <%= image_tag screenshot.file.url %>
-            <p><%= screenshot.caption %></p>
-            <%= link_to 'Delete Screenshot', screenshot_path(screenshot), method: :delete, class: 'delete' %>
-          </div>
-        <% end %>
-      </div>
-
-      <div>
-        <%= link_to 'Add a screenshot', new_screenshot_path(report_id: @report.id, vulnerability_id: key.to_s), target: '_blank' %>
-      </div>
-    </div>
+      <%= render 'new_penetration_markup', report: @report, existing_penetration: penetration, vulnerability_id: vulnerability_id %>
     <% end %>
     <% end %>
 </div>
 
 <br>
-<a href="#noredirect" onclick="addNewPenetrationTarget()">Add New Successful Penetration Log</a>
+  <%= link_to 'Add New Successful Penetration Log', add_new_penetration_path(@report.id), remote: true, class: 'btn btn-primary' %>
 <hr>
 
 <script type="text/javascript">
@@ -57,51 +24,4 @@
     }
 
   });
-
-
-
-  var guid = function() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
-  }
-
-  function addNewPenetrationTarget() {
-    setVisiblity('penetrations', 'true');
-    var penetrations = $('.penetrations');
-    var newGuid = guid();
-    $('<hr>').appendTo(penetrations);
-
-    // Vulnerability
-    $('<label for="report[options][penetrations][' + newGuid + '][vulnerability]">Vulnerability</label>').appendTo(penetrations);
-    $('<input value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability]" id="report_options_penetrations_' + newGuid + '_vulnerability">').appendTo(penetrations);
-
-    // System Vulnerable
-    $('<label for="report[options][penetrations][' + newGuid + '][system_vulnerable]">System Vulnerable</label>').appendTo(penetrations);
-    $('<input value="" type="text" name="report[options][penetrations][' + newGuid + '][system_vulnerable]" id="report_options_penetrations_' + newGuid + '_system_vulnerable">').appendTo(penetrations);
-
-    // Vulnerability Explanation
-    $('<label for="report[options][penetrations][' + newGuid + '][vulnerability_explanation]">Vulnerability Explanation</label>').appendTo(penetrations);
-    $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_explanation]" id="report_options_penetrations_' + newGuid + '_vulnerability_explanation"></textarea>').appendTo(penetrations);
-
-    // Vulnerability Fix
-    $('<label for="report[options][penetrations][' + newGuid + '][vulnerability_fix]">Vulnerability Fix</label>').appendTo(penetrations);
-    $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][vulnerability_fix]" id="report_options_penetrations_' + newGuid + '_vulnerability_fix"></textarea>').appendTo(penetrations);
-
-    // Severity
-    $('<label for="report[options][penetrations][' + newGuid + '][severity]">Severity</label>').appendTo(penetrations);
-    $('<select name="report[options][penetrations][' + newGuid + '][severity]" id="report_options_penetrations_' + newGuid + '_severity"><option value="critical">CRITICAL</option><option value="high">HIGH</option><option value="medium">MEDIUM</option><option value="low">LOW</option><option value="note">NOTE</option></select>').appendTo(penetrations);
-
-    // Proof of Concept Code
-    $('<label for="report[options][penetrations][' + newGuid + '][proof_of_concept_code]">Proof of Concept Code</label>').appendTo(penetrations);
-    $('<textarea rows="4" value="" type="text" name="report[options][penetrations][' + newGuid + '][proof_of_concept_code]" id="report_options_penetrations_' + newGuid + '_proof_of_concept_code"></textarea>').appendTo(penetrations);
-
-    $('<a target="_blank" href="/screenshots/new?report_id=' + <%= @report.id %> + '&amp;vulnerability_id=' + newGuid + '">Add a screenshot</a>').appendTo(penetrations);
-
-  }
 </script>
