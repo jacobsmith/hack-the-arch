@@ -24,7 +24,7 @@ module Penetrations
       @helper.text(self, "#{penetration[:vulnerability_explanation]}",  indent_paragraphs: 30)
       move_down 20
 
-      text "<b>Vulnerability Explanation:</b>", inline_format: true
+      text "<b>Vulnerability Fix:</b>", inline_format: true
       @helper.text(self, "#{penetration[:vulnerability_fix]}", indent_paragraphs: 30)
       move_down 20
 
