@@ -24,6 +24,10 @@ class ReportsController < ApplicationController
 
     vulnerability_ids = @report.options['penetrations'].keys
     @screenshots = Screenshot.where(vulnerability_id: vulnerability_ids)
+
+    @report.user = current_user
+    @report.save
+    redirect_to edit_report_path(@report)
   end
 
   def new_penetration
