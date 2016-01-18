@@ -119,6 +119,8 @@ ActiveRecord::Schema.define(version: 20151228172424) do
     t.integer  "bracket_id"
   end
 
+  add_index "teams", ["bracket_id"], name: "index_teams_on_bracket_id"
+
   create_table "user_problems", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "problem_id"
@@ -126,8 +128,6 @@ ActiveRecord::Schema.define(version: 20151228172424) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
-
-  add_index "teams", ["bracket_id"], name: "index_teams_on_bracket_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "fname"

@@ -4,6 +4,8 @@
 	<% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", user, method: :delete,
                                   data: { confirm: "You sure?" } %>
+		| <%= link_to "Reset Password", reset_user_password_path(user),
+		 																data: { confirm: "You sure? This will reset his or her password to 'password' (no quotes)." } %>
 		<br />
 		<%= mail_to user.email %>
 		<% if !user.paid? %>

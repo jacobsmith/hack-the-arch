@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
 	def show
 		user = User.find(params[:id])
-		if user.activated? 
+		if user.activated?
 			if view_other_profiles? || current_user?(user) || admin_user?
 				@user = user
 				@score = @user.get_score
@@ -41,8 +41,8 @@ class UsersController < ApplicationController
 
 			@accuracy_data = @user.get_accuracy_data
 			@category_data = @user.get_category_data
-			render :json => { accuracy_data: @accuracy_data.to_json.html_safe, 
-												category_data: @category_data.to_json.html_safe, 
+			render :json => { accuracy_data: @accuracy_data.to_json.html_safe,
+												category_data: @category_data.to_json.html_safe,
 												status: :ok}
 		else
       flash[:warning] = "No such user"
@@ -97,12 +97,12 @@ class UsersController < ApplicationController
 		if !fifty_percent_off.blank? && @user.discount_code == fifty_percent_off
 			@cost = @cost / 2
 		end
-		
+
   	customer = Stripe::Customer.create(
    		:email => params[:stripeEmail],
    		:source  => params[:stripeToken]
   	)
-	
+
   	charge = Stripe::Charge.create(
    		:customer    => customer.id,
    		:amount      => @cost.to_i.to_s,
@@ -137,6 +137,15 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def reset_password
+		redirect_to root_path unless current_user.admin?
+		user = User.find(params[:id])
+		user.password = 'password'
+		user.save
+		flash[:success] = "User password has been reset to 'password'. Please change immediately!"
+		redirect_to admin_path
+	end
+
 	private
 		def user_params
 			params.require(:user).permit(:fname, :lname, :username, :email, :password, :password_confirmation, :discount_code)
@@ -156,7 +165,7 @@ class UsersController < ApplicationController
 				redirect_to root_url
 			end
 		end
-		
+
 		def correct_user
 			@user = User.find(params[:id])
 			unless current_user?(@user)
@@ -174,7 +183,7 @@ class UsersController < ApplicationController
 
 		def activate_user(user)
 			user.update_attributes(paid: true)
-	
+
 			if send_activation_emails?
   			user.create_activation_digest
 				user.send_activation_email

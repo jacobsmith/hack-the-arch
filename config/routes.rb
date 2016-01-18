@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
 	get 'teams/get_score_data' => 'scoreboard#get_score_data'
 	get 'users/get_stats'			 => 'users#get_stats'
+  get 'user/:id/reset_password' => 'users#reset_password', as: :reset_user_password
 	get 'users/:id/checkout'	 => 'users#checkout', as: 'checkout'
 
 	post 'login' 		 			=> 'sessions#create'

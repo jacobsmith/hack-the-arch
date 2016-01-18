@@ -13,7 +13,8 @@ gem 'carrierwave', '0.10.0'
 gem 'mini_magick', '3.8.0'
 gem 'fog', '1.26.0'
 gem 'fog-google'
-gem 'bootstrap-will_paginate', '0.0.10'
+
+# PDF generation
 gem 'prawn', '~> 2.0.2'
 gem 'prawn-table', '~> 0.2.2'
 
