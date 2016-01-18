@@ -10,9 +10,12 @@ class ScoreboardController < ApplicationController
 	end
 
 	def get_score_data
+		render :nothing unless current_user.admin?
+
 		@scores = Team.get_top_teams_score_progression
-		render :json => { teams: @scores['teams'].to_json.html_safe, 
-											scores: @scores['scores'].to_json.html_safe, 
+
+		render :json => { teams: @scores['teams'].to_json.html_safe,
+											scores: @scores['scores'].to_json.html_safe,
 											status: :ok}
 	end
 

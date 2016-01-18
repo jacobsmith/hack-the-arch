@@ -9,7 +9,7 @@
 			<h5 class='text-muted'> (<%= pluralize(team.users.count, "member") %>) </h5>
 		</div>
 		<h3 class='col-md-3 col-xs-5'>
-			<%= team.get_score %>
+			<%= team.get_score if admin_user? || member_of_team(current_user, team) %>
 		</h3>
 
 	<% else %>
