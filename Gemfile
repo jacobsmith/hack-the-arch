@@ -13,13 +13,11 @@ gem 'carrierwave', '0.10.0'
 gem 'mini_magick', '3.8.0'
 gem 'fog', '1.26.0'
 gem 'fog-google'
-<<<<<<< HEAD
-gem 'will_paginate', '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
 gem 'prawn', '~> 2.0.2'
 gem 'prawn-table', '~> 0.2.2'
-=======
-gem 'will_paginate', '3.0.7' 
+
+gem 'will_paginate', '3.0.7'
 gem 'stripe', '1.31.0'
 gem 'simplecov', '0.11.1'
 
@@ -33,7 +31,6 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 gem 'c3-rails', '0.4.10'
 gem 'd3-rails', '3.5.6'
->>>>>>> upstream/master
 
 group :development, :test do
 	gem 'sqlite3'
