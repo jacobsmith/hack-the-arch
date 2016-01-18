@@ -26,6 +26,14 @@
 				</td> </tr>
 			<% end %>
 		<% end %>
+
+		<h4>Correctly answered questions: </h4>
+		<ul>
+		<% @team.submissions.where(correct: true).each do |correct_answer| %>
+					<li><%= correct_answer.problem.name %></li>
+		<% end %>
+		</ul>
+
 		<% if !member_of_team(current_user, @team) %>
 			<%= form_tag join_path, class: 'form-inline col-md-12' do %>
 				<%= hidden_field_tag 'user_id', current_user.id %>
