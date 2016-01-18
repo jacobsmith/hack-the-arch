@@ -10,18 +10,25 @@ class SubmissionsController < ApplicationController
 		explanation = params[:submission][:explanation]
 		correct = false
 		points = 0
-		solution = params[:submission][:value]
+		user_solution = params[:submission][:value]
 		@problem = Problem.find(params[:submission][:id])
+		correct_solution = @problem.solution
+
+		# If the solution is not case sensitive
+		if (!@problem.solution_case_sensitive?)
+			user_solution.upcase!
+			correct_solution.upcase!
+		end
 
 		# If limit has been reached
 		if (max = max_submissions_per_team) > 0 &&
-			  Submission.get_number_of_submissions_for_team(@problem.id, current_user.team_id) >= max
+				current_team.submissions.where(problem: @problem).count >= max
 			flash[:warning] = "Your team has alread used the maximum number of guesses for this problem!"
 			redirect_to @problem
 			return
 
 		# If the solution is correct
-		elsif solution == @problem.solution
+		elsif user_solution == correct_solution
 			correct = true
 
 			# And it has not already been solved
@@ -36,7 +43,7 @@ class SubmissionsController < ApplicationController
 
 		# Or the answer has already been guessed
 		elsif ( Submission.find_by(team_id: current_user.team_id,
-														 	submission: solution) )
+														 	submission: user_solution) )
 			flash[:warning] = "Your team has already guessed that!"
 			redirect_to @problem
 		else
@@ -46,7 +53,7 @@ class SubmissionsController < ApplicationController
 		Submission.create(team_id:  current_user.team_id,
 					 						user_id: current_user.id,
 					 						problem_id: @problem.id,
-					 						submission: solution,
+					 						submission: user_solution,
 					 						correct: correct,
 					 						points:	points)
 
@@ -58,10 +65,7 @@ class SubmissionsController < ApplicationController
 
 	private
 		def competition_active
-			start_time = Time.parse(Setting.find_by(name: 'start_time').value)
-			end_time = Time.parse(Setting.find_by(name: 'end_time').value)
-
-			unless (start_time < Time.zone.now && Time.zone.now < end_time)
+			unless competition_active?
 				flash[:danger] = "The competition isn't active!"
 				redirect_to root_url
 			end

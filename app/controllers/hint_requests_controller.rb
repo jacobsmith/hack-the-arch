@@ -6,6 +6,7 @@ class HintRequestsController < ApplicationController
 	def create
 		points = 0
 		@problem = Problem.find(params[:problem_id])
+		@bracket = Bracket.find(current_team.bracket_id)
 		@user = current_user
 
 		@team = Team.find(@user.team_id)
@@ -16,7 +17,8 @@ class HintRequestsController < ApplicationController
 			redirect_to @problem
 		elsif ((!hints_requested || 
 				 hints_requested.count < @problem.number_of_hints_available) &&
-				 @problem.number_of_hints_available > 0 )
+				 @problem.number_of_hints_available > 0 &&
+				 ((use_handicap? && hints_requested.count < @bracket.hints_available) || !use_handicap?))
 
 			@hint = Hint.find(@problem.get_next_hint(@team.id, @problem.id))
 
@@ -26,9 +28,11 @@ class HintRequestsController < ApplicationController
  						 						 problem_id: @problem.id,
 												 hint_id:	@hint.id,
  						 						 points:	@hint.points)
+    	session[:hint_requested] = true
 			redirect_to @problem
 		else
 			flash[:warning] = "No more hints available!"
+    	session[:hint_requested] = true
 			redirect_to @problem
 		end
 	end
@@ -51,10 +55,7 @@ class HintRequestsController < ApplicationController
 		end
 
 		def competition_active
-			start_time = Time.parse(Setting.find_by(name: 'start_time').value)
-			end_time = Time.parse(Setting.find_by(name: 'end_time').value)
-
-			unless (start_time < Time.zone.now && Time.zone.now < end_time)
+			unless competition_active?
 				flash[:danger] = "The competition isn't active!"
 				redirect_to root_url
 			end

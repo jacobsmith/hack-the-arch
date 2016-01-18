@@ -11,9 +11,15 @@ class ProblemsTest < ActionDispatch::IntegrationTest
 
 	def make_comp_inactive
 		log_in_as(@admin)
-		@start_time.value = Time.zone.now + 5.minutes
+		@start_time.value = (DateTime.current + 5.minutes).strftime("%m/%d/%Y %I:%M %p")
 		@start_time.save
 		log_out
+	end
+
+	test "should not redirect index when not logged in" do
+		get problems_path
+		assert_not flash.empty?
+		assert_redirected_to login_url
 	end
 
 	test "should not redirect index when competition hasn't started and admin" do
@@ -54,7 +60,8 @@ class ProblemsTest < ActionDispatch::IntegrationTest
 																	 solution: @problem.solution,
 																	 correct_message: @problem.correct_message,
 																	 false_message: @problem.false_message,
-																	 visible: @problem.visible}
+																	 visible: @problem.visible,
+																	 solution_case_sensitive: @problem.solution_case_sensitive}
 		assert_redirected_to problems_url
 		get problems_path
 		@problem = Problem.last

@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103003514) do
+ActiveRecord::Schema.define(version: 20151228172424) do
 
   create_table "brackets", force: :cascade do |t|
     t.string   "name"
     t.integer  "priority"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "hints_available"
   end
 
   create_table "caches", force: :cascade do |t|
@@ -38,6 +39,10 @@ ActiveRecord::Schema.define(version: 20151103003514) do
     t.integer  "problem_id"
   end
 
+  add_index "hint_requests", ["problem_id"], name: "index_hint_requests_on_problem_id"
+  add_index "hint_requests", ["team_id"], name: "index_hint_requests_on_team_id"
+  add_index "hint_requests", ["user_id"], name: "index_hint_requests_on_user_id"
+
   create_table "hints", force: :cascade do |t|
     t.string   "hint"
     t.integer  "points"
@@ -50,8 +55,8 @@ ActiveRecord::Schema.define(version: 20151103003514) do
   create_table "problems", force: :cascade do |t|
     t.integer  "points"
     t.string   "category"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "name"
     t.string   "description"
     t.string   "solution"
@@ -60,6 +65,7 @@ ActiveRecord::Schema.define(version: 20151103003514) do
     t.string   "hints"
     t.string   "picture"
     t.boolean  "visible"
+    t.boolean  "solution_case_sensitive"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -85,6 +91,9 @@ ActiveRecord::Schema.define(version: 20151103003514) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.string   "setting_type"
+    t.string   "category"
+    t.string   "label"
+    t.string   "tooltip"
   end
 
   create_table "submissions", force: :cascade do |t|
@@ -98,12 +107,15 @@ ActiveRecord::Schema.define(version: 20151103003514) do
     t.string   "submission"
   end
 
+  add_index "submissions", ["problem_id"], name: "index_submissions_on_problem_id"
+  add_index "submissions", ["team_id"], name: "index_submissions_on_team_id"
+  add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
+
   create_table "teams", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "passphrase"
-    t.string   "members"
     t.integer  "bracket_id"
   end
 
@@ -114,6 +126,8 @@ ActiveRecord::Schema.define(version: 20151103003514) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "teams", ["bracket_id"], name: "index_teams_on_bracket_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "fname"
@@ -130,6 +144,11 @@ ActiveRecord::Schema.define(version: 20151103003514) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.boolean  "paid"
+    t.string   "discount_code"
+    t.string   "username"
   end
+
+  add_index "users", ["team_id"], name: "index_users_on_team_id"
 
 end

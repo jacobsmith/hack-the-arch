@@ -1,14 +1,20 @@
 class User < ActiveRecord::Base
 	include SettingsHelper
 	attr_accessor :remember_token, :activation_token, :reset_token
-	attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
-  before_create :create_activation_digest
+	before_create :create_activation_digest
+
 	has_many :user_problems, dependent: :destroy
 	has_many :reports, dependent: :destroy
 
+	belongs_to :team
+	has_many :submissions, dependent: :destroy, inverse_of: :user
+	has_many :hint_requests, dependent: :destroy, inverse_of: :user
+
 	validates :fname,  presence: true, length: { maximum: 50 }
 	validates :lname,  presence: true, length: { maximum: 50 }
+	validates :username, presence: true, length: { maximum: 128 },
+											 uniqueness: {case_sensitive: true}
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 	validates :email, presence: true, length: { maximum: 255 },
 										format: { with: VALID_EMAIL_REGEX },
@@ -56,6 +62,12 @@ class User < ActiveRecord::Base
 	def activate
     update_attribute(:activated,    true)
     update_attribute(:activated_at, Time.zone.now)
+  end
+
+  # Creates and assigns the activation token and digest.
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    update_attribute(:activation_digest,  User.digest(activation_token))
   end
 
 	def send_activation_email
@@ -113,17 +125,43 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	def get_accuracy_data
+		result = Array.new
+
+		result.push(['Correct', self.submissions.where(correct: true).count])
+		result.push(['Incorrect', self.submissions.where.not(correct: true).count])
+
+		result
+	end
+
+	def get_category_data
+		result = Array.new
+		@intermediate_result = Hash.new
+		@categories = Problem.select(:category).distinct
+		@subs = self.submissions.where(correct: true)
+		@category = ""
+		@count = 0
+
+		for @category in @categories
+			@intermediate_result[@category.category] = 0
+		end
+
+		for @sub in @subs
+			@intermediate_result[@sub.problem.category] += 1
+		end
+
+		@intermediate_result.each do |key, value|
+			result.push([key, value])
+		end
+		result
+
+	end
+
 	private
 
     # Converts email to all lower-case.
     def downcase_email
       self.email = email.downcase
-    end
-
-    # Creates and assigns the activation token and digest.
-    def create_activation_digest
-      self.activation_token  = User.new_token
-      self.activation_digest = User.digest(activation_token)
     end
 
 end

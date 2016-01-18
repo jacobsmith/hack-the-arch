@@ -6,9 +6,9 @@ init = ->
   if !document.getElementById('filter') 
     return
   
-  $('#filter').keyup ->
+  $('.filter').keyup ->
     rex = new RegExp($(this).val(), 'i')
-    $(".teams_list > li").each ->
+    $(".filter_list > li").each ->
       $(this).hide()
       $(this).filter(->
         rex.test $(this).text()
@@ -16,5 +16,4 @@ init = ->
     return
   return
 
-
-$(document).ready(init)
+$(document).on('page:change', init)

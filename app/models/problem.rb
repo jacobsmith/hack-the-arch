@@ -1,5 +1,7 @@
 class Problem < ActiveRecord::Base
 	mount_uploader :picture, PictureUploader
+	has_many :hint_requests, dependent: :destroy, inverse_of: :problem
+	has_many :submissions, dependent: :destroy, inverse_of: :problem
 	validates :name,  presence: true, length: { maximum: 50 }
 	validates :category,  presence: true, length: { maximum: 100 }
 	validates :description,  presence: true, length: { maximum: 500 }
@@ -7,12 +9,12 @@ class Problem < ActiveRecord::Base
 	validates :visible, inclusion: { in: [true, false] }
 	validates :visible, exclusion: { in: [nil] }
 	validates :hints, absence: true, on: :create
+	validates :solution_case_sensitive, inclusion: { in: [true, false] }
+	validates :solution_case_sensitive, exclusion: { in: [nil] }
 	validate  :picture_size
 
 	def solved_by?(team_id)
-		Submission.find_by(team_id: team_id,
-											 problem_id: self.id,
-											 correct: true)
+		self.submissions.where(team: team_id, correct: true).count > 0 ? true : false
 	end
 
 	def add(hint_id)

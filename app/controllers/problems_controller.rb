@@ -18,7 +18,14 @@ class ProblemsController < ApplicationController
 		end
 
 		if params[:problem_id]
+			# If a specific problem was open, keep it open
 			@problem_view = Problem.find(params[:problem_id])
+
+			# If the hints tab was active, keep it active
+			if session[:hint_requested]
+				@hint_requested = true
+    		session.delete(:hint_requested)
+			end
 		end
 	end
 
@@ -96,7 +103,7 @@ class ProblemsController < ApplicationController
 
 	private
 		def problem_params
-			params.require(:problem).permit(:name, :category, :description, :points, :solution, :correct_message, :false_message, :picture, :visible)
+			params.require(:problem).permit(:name, :category, :description, :points, :solution, :correct_message, :false_message, :picture, :visible, :solution_case_sensitive)
 		end
 
 		def logged_in_user
