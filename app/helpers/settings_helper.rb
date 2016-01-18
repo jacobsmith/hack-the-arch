@@ -26,7 +26,7 @@ module SettingsHelper
 	end
 
 	def send_activation_emails?
-		(Setting.find_by(name: 'send_activation_emails').try(:value) == "0") ? false : true
+		(Setting.find_by(name: 'send_activation_emails').try(:value) == "1") ? true : false
 	end
 
 	def view_other_profiles?
@@ -38,7 +38,7 @@ module SettingsHelper
 	end
 
 	def require_payment?
-		(Setting.find_by(name: 'require_payment').try(:value) == "0") ? false : true
+		(Setting.find_by(name: 'require_payment').try(:value) == "1") ? true : false
 	end
 
 	def registration_active?
