@@ -4,7 +4,11 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.where(user: current_user)
+    if current_user.admin?
+      @reports = Report.all
+    else
+      @reports = Report.where(user: current_user)
+    end
   end
 
   # GET /reports/1

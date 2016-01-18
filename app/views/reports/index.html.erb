@@ -3,6 +3,7 @@
 <h1>Listing Reports</h1>
 
 <% @reports.each do |report| %>
+  <span><strong><%= "#{report.user.fname} #{report.user.lname} | #{report.user.username}" if current_user.admin? %></strong></span><br>
   <span><%= report.options['report_name'] %></span><br>
   <span><%= report.updated_at.to_formatted_s(:long)  %></span><br>
   <span><%= link_to 'Edit', edit_report_path(report) %></span> |
