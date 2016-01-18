@@ -36,11 +36,15 @@ module Penetrations
       text penetration[:proof_of_concept_code].gsub!(" ", "#{Prawn::Text::NBSP}"), font_family: "Courier", size: 12
 
       @screenshots.where(vulnerability_id: id).each do |screenshot|
-        # we read in the actual file to a StringIO instance so it works
-        # on both local and remote storage locations
-        image StringIO.new(screenshot.file.read), fit: [450, 450]
-        move_down 10
-        @helper.text(self, screenshot.caption)
+        # a screenshot.file is the object, which holds a #file property (the binary data),
+        # which could be nil if someone curls a screenshot REST entity with no file
+        if screenshot.file.file
+          # we read in the actual file to a StringIO instance so it works
+          # on both local and remote storage locations
+          image StringIO.new(screenshot.file.read), fit: [450, 450]
+          move_down 10
+          @helper.text(self, screenshot.caption)
+        end
       end
 
       move_down 20
