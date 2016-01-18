@@ -13,6 +13,8 @@ gem 'carrierwave', '0.10.0'
 gem 'mini_magick', '3.8.0'
 gem 'fog', '1.26.0'
 gem 'fog-google'
+gem 'net-ssh'
+gem 'gollum', '~> 4.0.1'
 
 # PDF generation
 gem 'prawn', '~> 2.0.2'
@@ -37,7 +39,7 @@ group :development, :test do
 	gem 'sqlite3'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
-  gem 'spring'
+  # gem 'spring'
 	gem 'pry'
 end
 

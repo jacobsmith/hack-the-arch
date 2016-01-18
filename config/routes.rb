@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Precious::App, at: 'wiki', as: :wiki
 
   resources :screenshots, only: [:new, :create, :edit, :update, :destroy]
   resources :reports
