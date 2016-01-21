@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 
 	patch 'settings' => 'settings#update'
 
+  get 'questionnaire' => 'anonymous_questions#index'
+  post 'questionnaire' => 'anonymous_questions#submit'
+  
 	resources :users
 	resources :problems
 	resources :teams
