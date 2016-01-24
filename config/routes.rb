@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :anonymous_questions
   mount Precious::App, at: 'wiki', as: :wiki
 
   resources :screenshots, only: [:new, :create, :edit, :update, :destroy]
@@ -47,5 +48,6 @@ Rails.application.routes.draw do
 	resources :hints,								only: [:new, :edit, :create, :update]
 	resources :password_resets,     only: [:new, :create, :edit, :update]
 	resources :brackets,						only: [:new, :create, :edit, :update]
-
+  resources :questionnaire_responses, only: [:new, :create]
+  resources :anonymous_questions
 end
