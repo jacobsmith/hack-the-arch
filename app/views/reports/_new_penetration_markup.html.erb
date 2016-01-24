@@ -56,4 +56,8 @@
     <br />
     <%= link_to 'Add a screenshot', new_screenshot_path(report_id: report.id, vulnerability_id: vulnerability_id.to_s), target: '_blank', class: 'button btn btn-success visited-white' %>
   </div>
+
+  <br />
+  <%= link_to 'Remove this penetration', remove_penetration_path(report.id, vulnerability_id.to_s), class: 'remove-penetration button btn btn-warning visited-white',  data: { penetration_id: vulnerability_id } %>
+
 </div>

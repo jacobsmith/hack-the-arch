@@ -22,6 +22,18 @@
       //they clicked no.
       return false;
     }
+  });
 
+  $('.remove-penetration').click( function(e) {
+    e.preventDefault();
+    if (confirm("Are you sure? This will permanenty delete this penetration log.")) {
+      var penetration_id = $(this).data('penetration-id');
+      $.post(this.href, {_method:'delete'}, null, "script");
+      $(this).closest(".well").hide();
+      return false;
+    } else {
+      //they clicked no.
+      return false;
+    }
   });
 </script>

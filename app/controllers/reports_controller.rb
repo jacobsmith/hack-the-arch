@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy, :get_pdf, :new_penetration]
+  before_action :set_report, only: [:show, :edit, :update, :destroy, :get_pdf, :new_penetration, :remove_penetration]
 
   # GET /reports
   # GET /reports.json
@@ -44,6 +44,12 @@ class ReportsController < ApplicationController
 
       format.js { render :new_penetration }
     end
+  end
+
+  def remove_penetration
+    @report.options[:penetrations].delete(params[:penetration_id])
+    @report.save
+    render nothing: true
   end
 
   # GET /reports/1/edit
