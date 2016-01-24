@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121010448) do
+ActiveRecord::Schema.define(version: 20160124195109) do
 
   create_table "anonymous_questions", force: :cascade do |t|
     t.string   "question"
@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20160121010448) do
   end
 
   create_table "anonymous_responses", force: :cascade do |t|
-    t.integer  "question_id"
-    t.text     "answer"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "anonymous_question_id"
+    t.text     "value"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "brackets", force: :cascade do |t|
@@ -80,6 +80,11 @@ ActiveRecord::Schema.define(version: 20160121010448) do
     t.string   "picture"
     t.boolean  "visible"
     t.boolean  "solution_case_sensitive"
+  end
+
+  create_table "questionnaire_responses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
