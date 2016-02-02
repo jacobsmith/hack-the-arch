@@ -8,6 +8,11 @@ class AnonymousQuestionsController < ApplicationController
     @anonymous_questions = AnonymousQuestion.all
   end
 
+  def printable
+    return 403 unless current_user.admin?
+    @anonymous_questions = AnonymousQuestion.where(active: true)
+  end
+
   # GET /anonymous_questions/1
   # GET /anonymous_questions/1.json
   def show

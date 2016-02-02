@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :anonymous_questions
+  get 'anonymous_questions/admin/printable' => 'anonymous_questions#printable'
   mount Precious::App, at: 'wiki', as: :wiki
 
   resources :screenshots, only: [:new, :create, :edit, :update, :destroy]
