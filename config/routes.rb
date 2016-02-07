@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :screenshots, only: [:new, :create, :edit, :update, :destroy]
   resources :reports
+  resources :exploits, only: [:index, :show, :search]
   get '/reports/:id/penetrations/new' => 'reports#new_penetration', as: :add_new_penetration
   delete '/reports/:id/penetrations/:penetration_id' => 'reports#remove_penetration', as: :remove_penetration
   get 'reports/:id/pdf' => 'reports#get_pdf', as: :get_pdf
